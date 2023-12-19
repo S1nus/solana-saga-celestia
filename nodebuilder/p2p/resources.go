@@ -36,6 +36,7 @@ func allowList(ctx context.Context, cfg Config, bootstrappers Bootstrappers) (rc
 	allowlist := make([]ma.Multiaddr, 0, len(bootstrappers)+len(mutual))
 	for _, b := range bootstrappers {
 		for _, baddr := range b.Addrs {
+			log.Info("Trying to resolve bootstrapper: ", baddr.String())
 			resolved, err := madns.DefaultResolver.Resolve(ctx, baddr)
 			if err != nil {
 				log.Warnw("error resolving bootstrapper DNS", "addr", baddr.String(), "err", err)
